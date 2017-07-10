@@ -1,0 +1,73 @@
+<launch>
+
+<!-- ********************* Begin Gazebo Defaults ******************************** -->
+
+<!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="false"/>
+  <arg name="headless" default="true"/>
+  <arg name="debug" default="false"/>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="extra_gazebo_args" default=""/>
+  <arg name="physics" default="ode"/>
+  <arg name="verbose" default="true"/>
+  <arg name="world_name" value="$(find basicbot_gazebo)/worlds/basicbot.world"/>
+  <arg name="respawn_gazebo" default="false"/>
+  <arg name="use_clock_frequency" default="false"/>
+  <arg name="pub_clock_frequency" default="100"/>
+ 
+  <!-- set use_sim_time flag -->
+  <group if="$(arg use_sim_time)">
+    <param name="/use_sim_time" value="true" />
+  </group>
+ 
+  <!-- set command arguments -->
+  <arg unless="$(arg paused)" name="command_arg1" value=""/>
+  <arg     if="$(arg paused)" name="command_arg1" value="-u"/>
+  <arg unless="$(arg headless)" name="command_arg2" value=""/>
+  <arg     if="$(arg headless)" name="command_arg2" value="-r"/>
+  <arg unless="$(arg verbose)" name="command_arg3" value=""/>
+  <arg     if="$(arg verbose)" name="command_arg3" value="--verbose"/>
+  <arg unless="$(arg debug)" name="type" value="gzserver"/>
+  <arg     if="$(arg debug)" name="type" value="debug"/>
+
+  <group if="$(arg use_clock_frequency)">
+    <param name="gazebo/pub_clock_frequency" value="$(arg pub_clock_frequency)" />
+  </group>
+
+<!-- ********************* End Gazebo Defaults ******************************** -->    
+
+
+  <!-- start gazebo server-->
+  <remap from="/clock" to="ga1_clock"/>
+  <env name="GAZEBO_MASTER_URI" value="http://localhost:11345"/>
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" respawn="$(arg respawn_gazebo)" 
+    output="screen" args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) 
+    $(arg extra_gazebo_args) $(arg world_name)">
+    <remap from="clock" to="gazeboclock"/>
+  </node>
+
+  <!-- Load the transporter node -->
+  <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen">
+  </node>
+
+	<!-- Load the turn_drive_scan node -->
+	<node name="turn_drive_scan" pkg="basicbot_ga" type="turn_drive_scan_node.py" output="screen">
+  </node>
+
+	<!-- Load the step world node -->
+  <node name="step_world" pkg="world_step" type="step_world_server">
+  </node>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find basicbot_description)/urdf/basicbot.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model basicbot -param robot_description">
+    </node>
+
+</launch>

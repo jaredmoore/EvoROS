@@ -1,0 +1,117 @@
+<launch>
+
+<group ns="ga1">
+  <remap from="/clock" to="/ga1_clock"/>
+  <!-- start gazebo server-->
+  <env name="GAZEBO_MASTER_URI" value="http://localhost:11345"/>
+  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" 
+    args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) 
+    $(arg extra_gazebo_args) $(arg world_name)">
+  </node>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find basicbot_description)/urdf/basicbot.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model basicbot -param robot_description -gazebo_namespace /ga1/gazebo"/>
+
+  <!-- Load the transporter node -->
+  <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
+
+	<!-- Load the turn_drive_scan node -->
+	<node name="turn_drive_scan" pkg="basicbot_ga" type="turn_drive_scan_node.py" output="screen">
+   <remap from="clock" to="ga1_clock"/> 
+  </node>
+
+	<!-- Load the step world node -->
+  <node name="step_world" pkg="world_step" type="step_world_server"><remap from="clock" to="ga1_clock"/></node>
+
+</group>
+
+<group ns="ga2">
+  <remap from="/clock" to="/ga2_clock"/>
+  <!-- start gazebo server-->
+  <env name="GAZEBO_MASTER_URI" value="http://localhost:11346"/>
+  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" 
+    args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) 
+    $(arg extra_gazebo_args) $(arg world_name)">
+  </node>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find basicbot_description)/urdf/basicbot.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model basicbot -param robot_description -gazebo_namespace /ga2/gazebo"/>
+
+  <!-- Load the transporter node -->
+  <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
+
+  <!-- Load the turn_drive_scan node -->
+  <node name="turn_drive_scan" pkg="basicbot_ga" type="turn_drive_scan_node.py" output="screen"></node>
+
+  <!-- Load the step world node -->
+  <node name="step_world" pkg="world_step" type="step_world_server"/>
+
+</group>
+
+<group ns="ga3">
+  <remap from="/clock" to="/ga3_clock"/>
+  <!-- start gazebo server-->
+  <env name="GAZEBO_MASTER_URI" value="http://localhost:11347"/>
+  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" 
+    args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) 
+    $(arg extra_gazebo_args) $(arg world_name)">
+  </node>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find basicbot_description)/urdf/basicbot.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model basicbot -param robot_description -gazebo_namespace /ga3/gazebo"/>
+
+  <!-- Load the transporter node -->
+  <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
+
+  <!-- Load the turn_drive_scan node -->
+  <node name="turn_drive_scan" pkg="basicbot_ga" type="turn_drive_scan_node.py" output="screen"></node>
+
+  <!-- Load the step world node -->
+  <node name="step_world" pkg="world_step" type="step_world_server"/>
+
+</group>
+
+<group ns="ga4">
+  <remap from="/clock" to="/ga4_clock"/>
+  <!-- start gazebo server-->
+  <env name="GAZEBO_MASTER_URI" value="http://localhost:11348"/>
+  <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" 
+    args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) 
+    $(arg extra_gazebo_args) $(arg world_name)">
+  </node>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find basicbot_description)/urdf/basicbot.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model basicbot -param robot_description -gazebo_namespace /ga4/gazebo"/>
+
+  <!-- Load the transporter node -->
+  <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
+
+  <!-- Load the turn_drive_scan node -->
+  <node name="turn_drive_scan" pkg="basicbot_ga" type="turn_drive_scan_node.py" output="screen"></node>
+
+  <!-- Load the step world node -->
+  <node name="step_world" pkg="world_step" type="step_world_server"/>
+
+</group>
+
+</launch>

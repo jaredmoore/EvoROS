@@ -1,0 +1,23 @@
+<launch>
+
+<!-- ********************* Begin Gazebo Defaults ******************************** -->
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="args" default="--verbose -r -e ode"/>
+  <arg name="world" value="worlds/empty.world"/>
+ 
+  <!-- set use_sim_time flag -->
+  <!--<param name="/use_sim_time" value="true" />-->
+
+
+<!-- ********************* End Gazebo Defaults ******************************** -->    
+
+
+  <!-- start gazebo server-->
+  <!--<env name="GAZEBO_MASTER_URI" value="http://localhost:11345"/>-->
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" args="$(arg world) $(arg args)" respawn="false" output="screen">
+    <remap from="rosout" to="rosout_remapped" />  
+    <remap from="clock" to="clock_remapped" />
+  </node>
+
+</launch>
