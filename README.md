@@ -1,10 +1,10 @@
 # EvoROS: Evolutionary Robotics with ROS and Gazebo
 
 Authors:
-Jared M. Moore, Grand Valley State University
-Anthony J. Clark, Missouri State University
-Glen A. Simon, Michigan State University
-Philip K. McKinley, Michigan State University
+Jared M. Moore, Grand Valley State University  
+Anthony J. Clark, Missouri State University  
+Glen A. Simon, Michigan State University  
+Philip K. McKinley, Michigan State University  
 
 ## Software Used:
 
@@ -66,6 +66,10 @@ Set your output path according to your user folder, or where you want the output
 
 ** Current Limitations **
 The simulations are not deterministic.  Therefore, methods to alleviate this are recommended.  Given this simple example, we have not implemented them here.
+
+## Basicbot Experiment Structure:
+
+The basicbot example is divided into two primary folders in the `/src/` directory.  The first `basicbot` contains the code necessary to define the basicbot robot platform.  The second `basicbot_ga` implements a genetic algorithm to evolve a controller for the basicbot.
 
 ## Future Extensions:
 
