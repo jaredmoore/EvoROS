@@ -61,7 +61,7 @@
   <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
 
 	<!-- Load the turn_drive_scan node -->
-	<node name="turn_drive_scan" pkg="basicbot" type="turn_drive_scan_node.py" output="screen">
+	<node name="turn_drive_scan" pkg="basicbot_control" type="turn_drive_scan_node.py" output="screen">
   </node>
 
 </group>
@@ -87,7 +87,7 @@
   <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
 
   <!-- Load the turn_drive_scan node -->
-  <node name="turn_drive_scan" pkg="basicbot" type="turn_drive_scan_node.py" output="screen">
+  <node name="turn_drive_scan" pkg="basicbot_control" type="turn_drive_scan_node.py" output="screen">
   </node>
 
 </group>
@@ -113,7 +113,7 @@
   <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
 
   <!-- Load the turn_drive_scan node -->
-  <node name="turn_drive_scan" pkg="basicbot" type="turn_drive_scan_node.py" output="screen"></node>
+  <node name="turn_drive_scan" pkg="basicbot_control" type="turn_drive_scan_node.py" output="screen"></node>
 
 </group>
 
@@ -138,7 +138,7 @@
   <node name="basicbot_transporter" pkg="basicbot_ga" type="basicbot_transporter.py" output="screen"></node>
 
   <!-- Load the turn_drive_scan node -->
-  <node name="turn_drive_scan" pkg="basicbot" type="turn_drive_scan_node.py" output="screen"></node>
+  <node name="turn_drive_scan" pkg="basicbot_control" type="turn_drive_scan_node.py" output="screen"></node>
 
 </group>
 
